@@ -20,7 +20,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     # Accounts app url
-    path("api/auth/", include("accounts.urls")),
+    path("api/v1/auth/", include("accounts.urls")),
+    # Orders app url
+    path("api/v1/orders/", include("orders.urls")),
     # Swagger Docs url
     path("", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     # Redoc Docs url
