@@ -1,13 +1,22 @@
 from django.contrib.auth import login
+from django.http import Http404
 from django.shortcuts import render
 from drf_yasg.utils import swagger_auto_schema
 from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
+from .models import CustomUser
+from .permissions import IsOwner
+from .serializers import (
+    EditUserDetailsSerializer,
+    LoginSerializer,
+    RegisterSerializer,
+    UserSerializer,
+)
 
 
 # Register Client View
@@ -39,3 +48,22 @@ class LoginAPIView(KnoxLoginView):
         user = serializer.validated_data["user"]
         login(request, user)
         return super(LoginAPIView, self).post(request, format=None)
+
+
+class EditUserDetailsAPIView(generics.GenericAPIView):
+    serializer_class = EditUserDetailsSerializer
+    permission_classes = (IsOwner,)
+
+    def get_object(self, email):
+        try:
+            return CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            raise Http404
+
+    def put(self, request, *args, **kwargs):
+        user = self.get_object(request.user.email)
+        serializer = self.serializer_class(user, data=request.data, partial=True)
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)

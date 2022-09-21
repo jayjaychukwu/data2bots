@@ -15,10 +15,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = [
-            "username",
-            "password",
-        ]
+        fields = ("username", "password")
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -35,3 +32,15 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
 
         return user
+
+
+class EditUserDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = (
+            "first_name",
+            "last_name",
+            "gender",
+            "phone_number",
+            "address",
+        )
