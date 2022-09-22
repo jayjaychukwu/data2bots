@@ -8,6 +8,9 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     vendor = models.CharField(max_length=40)
 
+    def __str__(self):
+        return self.name
+
 
 class Order(models.Model):
     PAY_WITH_CARD = "CARD"
@@ -47,3 +50,6 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUSES)
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD)
     delivery_option = models.CharField(max_length=20, choices=DELIVERIES)
+
+    def __str__(self):
+        return str(self.number)
