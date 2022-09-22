@@ -13,7 +13,6 @@
 <br>
 
 ## Admin Details: 127.0.0.1:8000/admin
-#
 > username: admin  
 > password: admin12345
 
@@ -21,7 +20,6 @@
 
 
 ## Login Method and Instructions
-#
 1. Go to 127.0.0.1:8000/ which will open the Swagger Interactable Docs.
 2. Go to the Login endpoint under accounts.
 3. Use the following details to login:
@@ -34,7 +32,6 @@
 **Note**: Dummy data already exists in the database.
 
 ## Custom Commands
-#
 ### You can create dummy users by typing:
 > python manage.py createusers
 
@@ -42,14 +39,12 @@
 > python manage.py createdata
 
 ## Tests
-#
-## To run tests, use:
+### To run tests, use:
 > python manage.py test
-## It will run the tests for all the apps available.  
+### It will run the tests for all the apps available.  
 <br>
 
 ## Necessary Endpoints
-#
 1.  For clients to **register**: 127.0.0.1:8000/api/v1/auth/register/
 2.  To see your order history: 127.0.0.1:8000/api/v1/orders/ <br>~ *you must be logged in*
 3.  For clients to edit their information: 127.0.0.1:8000/api/v1/auth/update/ <br>~ *you must also be logged in*
